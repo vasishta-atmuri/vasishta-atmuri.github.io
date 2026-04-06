@@ -1009,3 +1009,353 @@ body {
     justify-content: flex-end;
   }
 }
+
+@media (max-width: 768px) {
+  .top-nav {
+    height: auto;
+    padding: 0.6rem 0 0.45rem;
+  }
+
+  .nav-container {
+    padding: 0 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    align-items: center;
+  }
+
+  .nav-brand-group {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .nav-brand-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-actions {
+    margin-left: auto;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links a {
+    flex: 0 0 auto;
+  }
+
+  .main-content {
+    padding-top: 120px;
+  }
+
+  .hero-wrapper,
+  .impact-section,
+  .expertise-section,
+  .dual-section,
+  .education-section,
+  .skills-section,
+  .contact-section {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .hero-wrapper {
+    min-height: auto;
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .hero-grid {
+    gap: 2.5rem;
+  }
+
+  .hero-name {
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-tagline {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-buttons {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    flex: 1 1 220px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .hero-companies {
+    gap: 0.65rem;
+  }
+
+  .company-chip {
+    padding: 7px 14px;
+  }
+
+  .partner-category {
+    margin-bottom: 1.25rem;
+  }
+
+  .app-icon-grid {
+    justify-content: center;
+    gap: 1rem 0.75rem;
+  }
+
+  .app-icon-wrapper {
+    width: 56px;
+  }
+
+  .app-icon-img {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+  }
+
+  .impact-card,
+  .chart-card,
+  .expertise-content,
+  .edu-card,
+  .certs-card,
+  .skills-category,
+  .sd-showcase {
+    padding: 1.5rem;
+  }
+
+  .impact-number {
+    font-size: 2.5rem;
+  }
+
+  .chart-container {
+    height: 220px;
+  }
+
+  .expertise-tab {
+    min-height: 80px;
+    padding: 14px 16px;
+  }
+
+  .expertise-name {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .expertise-meta-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .timeline {
+    padding-left: 48px;
+  }
+
+  .timeline::before {
+    left: 14px;
+    top: 18px;
+  }
+
+  .timeline-number {
+    left: -48px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+
+  .exp-card {
+    padding: 1rem;
+  }
+
+  .exp-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.65rem;
+  }
+
+  .exp-metric {
+    min-width: 0;
+  }
+
+  .sd-company-header-row {
+    align-items: flex-start;
+  }
+
+  .sd-links {
+    width: 100%;
+  }
+
+  .sd-product-card {
+    padding: 1rem;
+  }
+
+  .sd-product-main {
+    gap: 0.85rem;
+  }
+
+  .sd-product-visual {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+  }
+
+  .contact-links {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-container {
+    padding: 0 1rem;
+  }
+
+  .nav-brand-simple {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .nav-brand-name {
+    font-size: 13px;
+    max-width: 180px;
+  }
+
+  .nav-linkedin span {
+    display: none;
+  }
+
+  .main-content {
+    padding-top: 112px;
+  }
+
+  .hero-wrapper,
+  .impact-section,
+  .expertise-section,
+  .dual-section,
+  .education-section,
+  .skills-section,
+  .contact-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero-label,
+  .section-eyebrow {
+    letter-spacing: 1.6px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+
+  .hero-companies {
+    justify-content: center;
+  }
+
+  .company-chip {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 11vw, 2.6rem);
+  }
+
+  .section-subtitle,
+  .expertise-desc {
+    font-size: 0.95rem;
+  }
+
+  .impact-card,
+  .chart-card,
+  .expertise-content,
+  .edu-card,
+  .certs-card,
+  .skills-category,
+  .sd-showcase,
+  .contact-link {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .timeline {
+    padding-left: 0;
+  }
+
+  .timeline::before,
+  .timeline-number {
+    display: none;
+  }
+
+  .exp-company-row {
+    align-items: flex-start;
+  }
+
+  .exp-date {
+    width: 100%;
+  }
+
+  .exp-date::before {
+    content: "";
+    margin-right: 0;
+  }
+
+  .exp-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .edu-school {
+    font-size: 1.5rem;
+  }
+
+  .cert-chip,
+  .skill-chip {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .contact-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-link {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .sd-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
