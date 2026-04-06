@@ -355,59 +355,136 @@ document.querySelectorAll('.btn-primary, .btn-secondary, .nav-btn-primary, .sd-l
 });
 
 // ── CHARTS ───────────────────────────────────────────
-window.addEventListener('load', () => {
+let impactChartInstance = null;
+let progressionChartInstance = null;
+let chartResizeTimer = null;
+
+function getChartViewport() {
+  return {
+    isCompact: window.matchMedia('(max-width: 768px)').matches,
+    isNarrow: window.matchMedia('(max-width: 560px)').matches
+  };
+}
+
+function renderCharts() {
+  if (typeof Chart === 'undefined') return;
+
+  const { isCompact, isNarrow } = getChartViewport();
   const accent = '#2563EB';
   const purple = '#8B5CF6';
   const grid = 'rgba(0,0,0,0.04)';
   const tick = '#94A3B8';
   const fontFamily = "'Manrope', -apple-system, sans-serif";
+  const impactLabels = isNarrow
+    ? ['CPI', 'CTR', 'Install CVR', 'C-SAT']
+    : isCompact
+      ? ['CPI Reduction', 'CTR Lift', 'Install CVR', 'C-SAT Lift']
+      : ['CPI Reduction', 'CTR Lift', 'Install Conv. Lift', 'C-SAT Lift'];
+  const impactTooltipLabels = [
+    '40% CPI reduction',
+    '25% CTR lift',
+    '15% install conversion lift',
+    '20% C-SAT lift'
+  ];
+  const progressionRoles = [
+    'Deloitte Analyst',
+    'MBA Studies',
+    'Global Strategist',
+    'Mgr Partnerships',
+    'Lead PM',
+    'Sr. Mgr Canada',
+    'Sr. Mgr Canada',
+    'Lead, Gaming Platform Partnerships'
+  ];
+  const impactScales = isNarrow
+    ? {
+        x: {
+          ticks: {
+            color: tick,
+            callback: value => `${value}%`,
+            font: { size: 10, weight: '600', family: fontFamily },
+            maxTicksLimit: 5
+          },
+          grid: { color: grid },
+          suggestedMax: 50
+        },
+        y: {
+          ticks: {
+            color: tick,
+            font: { size: 10, weight: '600', family: fontFamily }
+          },
+          grid: { display: false }
+        }
+      }
+    : {
+        x: {
+          ticks: {
+            color: tick,
+            font: { size: isCompact ? 10 : 11, weight: '600', family: fontFamily },
+            maxRotation: 0,
+            minRotation: 0
+          },
+          grid: { color: grid }
+        },
+        y: {
+          ticks: {
+            color: tick,
+            callback: value => `${value}%`,
+            font: { size: isCompact ? 10 : 11, family: fontFamily }
+          },
+          grid: { color: grid },
+          suggestedMax: 50
+        }
+      };
 
   const impactEl = document.getElementById('impactChart');
   if (impactEl) {
-    new Chart(impactEl.getContext('2d'), {
+    impactChartInstance?.destroy();
+    impactChartInstance = new Chart(impactEl.getContext('2d'), {
       type: 'bar',
       data: {
-        labels: ['CPI Reduction', 'CTR Lift', 'Install Conv. Lift', 'C-SAT Lift'],
+        labels: impactLabels,
         datasets: [{
           data: [40, 25, 15, 20],
           backgroundColor: [accent, '#3B82F6', '#6366F1', purple],
           borderRadius: 8,
-          borderSkipped: false
+          borderSkipped: false,
+          maxBarThickness: isNarrow ? 24 : isCompact ? 34 : 42
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: { duration: 1200, easing: 'easeOutQuart' },
+        resizeDelay: 150,
+        indexAxis: isNarrow ? 'y' : 'x',
+        animation: { duration: isCompact ? 800 : 1200, easing: 'easeOutQuart' },
+        layout: {
+          padding: {
+            top: 4,
+            right: isNarrow ? 4 : 8,
+            bottom: isNarrow ? 0 : 4,
+            left: isNarrow ? 0 : 4
+          }
+        },
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: ctx => {
-                const units = [
-                  '40% CPI reduction',
-                  '25% CTR lift',
-                  '15% install conversion lift',
-                  '20% C-SAT lift'
-                ];
-                return units[ctx.dataIndex];
-              }
+              label: ctx => impactTooltipLabels[ctx.dataIndex]
             },
             titleFont: { family: fontFamily },
             bodyFont: { family: fontFamily }
           }
         },
-        scales: {
-          x: { ticks: { color: tick, font: { size: 11, weight: '600', family: fontFamily } }, grid: { color: grid } },
-          y: { ticks: { color: tick, callback: v => v + '%', font: { size: 11, family: fontFamily } }, grid: { color: grid } }
-        }
+        scales: impactScales
       }
     });
   }
 
   const progressEl = document.getElementById('progressionChart');
   if (progressEl) {
-    new Chart(progressEl.getContext('2d'), {
+    progressionChartInstance?.destroy();
+    progressionChartInstance = new Chart(progressEl.getContext('2d'), {
       type: 'line',
       data: {
         labels: ['2010', '2013', '2015', '2017', '2020', '2021', '2025', '2026'],
@@ -419,8 +496,8 @@ window.addEventListener('load', () => {
           pointBackgroundColor: accent,
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
-          pointRadius: 5,
-          pointHoverRadius: 8,
+          pointRadius: isCompact ? 3 : 5,
+          pointHoverRadius: isCompact ? 5 : 8,
           fill: true,
           tension: 0.4
         }]
@@ -428,27 +505,50 @@ window.addEventListener('load', () => {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: { duration: 1500, easing: 'easeOutQuart' },
+        resizeDelay: 150,
+        animation: { duration: isCompact ? 900 : 1500, easing: 'easeOutQuart' },
+        layout: {
+          padding: {
+            top: 4,
+            right: isNarrow ? 6 : 10,
+            bottom: 0,
+            left: isNarrow ? 0 : 6
+          }
+        },
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: ctx => {
-                const roles = ['Deloitte Analyst', 'MBA Studies', 'Global Strategist', 'Mgr Partnerships', 'Lead PM', 'Sr. Mgr Canada', 'Sr. Mgr Canada', 'Lead, Gaming Platform Partnerships'];
-                return roles[ctx.dataIndex] || '';
-              }
+              label: ctx => progressionRoles[ctx.dataIndex] || ''
             },
             titleFont: { family: fontFamily },
             bodyFont: { family: fontFamily }
           }
         },
         scales: {
-          x: { ticks: { color: tick, font: { size: 11, weight: '600', family: fontFamily } }, grid: { color: grid } },
+          x: {
+            ticks: {
+              color: tick,
+              font: { size: isCompact ? 10 : 11, weight: '600', family: fontFamily },
+              autoSkip: true,
+              maxTicksLimit: isNarrow ? 4 : isCompact ? 5 : 8
+            },
+            grid: { color: grid }
+          },
           y: { display: false, min: 0, max: 11 }
         }
       }
     });
   }
+}
+
+window.addEventListener('load', () => {
+  renderCharts();
+
+  window.addEventListener('resize', () => {
+    window.clearTimeout(chartResizeTimer);
+    chartResizeTimer = window.setTimeout(renderCharts, 180);
+  });
 });
 
 // ── CAROUSEL DOT NAVIGATION ──────────────────────────
