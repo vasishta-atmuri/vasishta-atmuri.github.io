@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+.claude/
+knowledge-base/
+Resources/
+package-lock.json
+package.json
+style 2.css
+vasishta-atmuri-website.html
+vasishta-atmuri-website 2.html
